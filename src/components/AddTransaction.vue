@@ -30,6 +30,7 @@ const amount = ref("");
 
 // Get toast interface
 const toast = useToast();
+const emit = defineEmits(["transactionSubmitted"]);
 
 const onSubmit = () => {
   if (!text.value || !amount.value) {
@@ -37,6 +38,13 @@ const onSubmit = () => {
     toast.error("Both fields must be filled.");
     return;
   }
+
+  const transactionData = {
+    text: text.value,
+    amount: parseFloat(amount.value),
+  };
+
+  emit("transactionSubmitted", transactionData);
 
   console.log(text.value, amount.value);
   // Clear form fields
